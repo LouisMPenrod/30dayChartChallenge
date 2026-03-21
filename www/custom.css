@@ -1,0 +1,135 @@
+/* =============================================================================
+   #30DayChartChallenge 2026 — Custom Theme
+   Aged government reference book aesthetic
+   ============================================================================= */
+
+/* --- TYPOGRAPHY --- */
+body {
+  font-family: 'IBM Plex Mono', monospace;
+  background-color: #EEEEEE;
+  color: #2D2D2D;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+  background-color: #2D2D2D !important;
+  border-bottom: 2px solid #555555;
+  letter-spacing: 0.05em;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: #EEEEEE !important;
+}
+
+.navbar .nav-link {
+  color: #BBBBBB !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+  color: #EEEEEE !important;
+  border-bottom: 2px solid #EEEEEE;
+}
+
+/* --- NAVLIST (left sidebar day tabs) --- */
+.nav-pills .nav-link {
+  font-size: 0.75rem;
+  color: #555555;
+  padding: 6px 12px;
+  border-radius: 0;
+  border-left: 2px solid transparent;
+  letter-spacing: 0.03em;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #DDDDDD;
+  color: #2D2D2D;
+  border-left: 2px solid #888888;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #DDDDDD;
+  color: #2D2D2D !important;
+  border-left: 2px solid #2D2D2D;
+  font-weight: 700;
+}
+
+/* --- DAY SIDEBAR --- */
+.day-sidebar {
+  padding: 8px 4px;
+}
+
+.day-number {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888888;
+  margin-bottom: 2px;
+}
+
+.day-topic {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2D2D2D;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.day-text {
+  font-size: 0.75rem;
+  color: #555555;
+  line-height: 1.6;
+}
+
+.day-text em {
+  color: #999999;
+  font-style: italic;
+}
+
+/* --- SIDEBAR PANEL --- */
+.bslib-sidebar-layout > .sidebar {
+  background-color: #E4E4E4;
+  border-right: 1px solid #CCCCCC;
+}
+
+/* --- MAIN CONTENT PANELS --- */
+.tab-content {
+  background-color: #EEEEEE;
+  padding: 16px 0;
+}
+
+.bslib-page-navbar > .tab-content {
+  padding-top: 16px;
+}
+
+/* --- HR DIVIDER --- */
+hr {
+  border-color: #CCCCCC;
+  margin: 12px 0;
+}
+
+/* --- PLOT AREA --- */
+.shiny-plot-output {
+  background-color: #EEEEEE;
+}
+
+/* --- SCROLLBAR (subtle) --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #EEEEEE;
+}
+::-webkit-scrollbar-thumb {
+  background: #CCCCCC;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #AAAAAA;
+}
