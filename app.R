@@ -60,7 +60,7 @@ ui <- page_navbar(
       nav_panel(
         "1. Part-to-Whole",
         day_header(1, "Part-to-Whole"),
-        # imageOutput("day01_plot")
+        imageOutput("day01_plot")
       ),
 
       nav_panel(
@@ -295,7 +295,7 @@ ui <- page_navbar(
 server <- function(input, output, session) {
 
   # COMPARISONS
-  # output$day01_plot <- renderImage()
+  output$day01_plot <- renderImage({list(src = "www/assets/test.png", width = "100%")}, deleteFile=FALSE)
   # output$day02_plot <- renderImage()
   # output$day03_plot <- renderImage()
   # output$day04_plot <- renderImage()
