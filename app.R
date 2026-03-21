@@ -298,7 +298,7 @@ ui <- page_navbar(
 server <- function(input, output, session) {
 
   # COMPARISONS
-  output$day01_plot <- renderImage({list(src = "www/assets/test.png", width = "100%", height = "auto")}, deleteFile=FALSE)
+  output$day01_plot <- renderImage({list(src = "www/assets/test.png", width = "100%", height = "auto")}, deleteFile=FALSE) 
   # output$day02_plot <- renderImage()
   # output$day03_plot <- renderImage()
   # output$day04_plot <- renderImage()
