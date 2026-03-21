@@ -133,3 +133,16 @@ hr {
 ::-webkit-scrollbar-thumb:hover {
   background: #AAAAAA;
 }
+
+html, body {
+  background-color: #EEEEEE !important;
+  min-height: 100vh;
+}
+
+.bslib-page-navbar,
+.tab-content,
+.tab-pane,
+.navset-pill-list,
+.bslib-gap-spacing {
+  background-color: #EEEEEE !important;
+}
