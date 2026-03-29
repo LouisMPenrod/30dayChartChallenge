@@ -1,0 +1,101 @@
+ï»¿Marine Recreational Information Program Query Results
+
+Your Query Parameters:
+
+·Query: MRIP EFFORT TIME SERIES
+
+·Year: 2015 - 2025
+
+·Summary:WAVE 1
+
+·Geographic Area: UNITED STATES BY STATE
+
+·Fishing Mode: ALL MODES COMBINED
+
+·Fishing Area: ALL AREAS COMBINED
+
+Information:
+
+·ANGLER TRIPS
+
+MRIP does not support the use of estimates with a percent standard error above 50 and in those instances, recommends considering higher levels of aggregation (e.g., across states, geographic regions, or fishing modes).
+
+Results from 1981-2017 contain estimates resulting from the full application of both the Access Point Angler Intercept Survey (APAIS) and Fishing Effort Survey (FES) calibration.
+
+As of 2018 wave 1, all estimates of shore and private/rental boat fishing effort are now based on the FES.
+
+MRIP estimates for Louisiana are not available after 2013. State produced estimates are available through the MRIP National Query. For more information on state run surveys and estimates, please click <a href='http://www.wlf.louisiana.gov/lacreel' target='_blank'>here</a>.
+
+Estimates for Hawaii (prior to 2023) and Puerto Rico (prior to 2014) are based on Marine Recreational Fisheries Statistics Survey methodology and have not been calibrated.
+
+Beginning in 2023, estimates for Hawaii are produced using certified MRIP survey designs and weighted estimation methods.
+
+Review the <a href='https://www.fisheries.noaa.gov/recreational-fishing-data/recreational-fishing-data-glossary#type-of-fishing-(mode)' target='_blank'>glossary</a> for a description of how the for-hire survey methods have changed over time.
+
+As part of the government's guidelines for statistical programs, the Office of Management and Budget requires federal agencies to establish their own criteria for statistical precision (Standard 4.1.5 in OMB Standards and Guidelines for Statistical Surveys)
+
+Upper and lower confidence limits are calculated using a standard 95% confidence interval. The lower 95% confidence interval is truncated at 0 to match graph output..
+
+<a href='https://www.fisheries.noaa.gov/recreational-fishing-data/recreational-fishing-data-glossary#percent-standard-error-(pse)' target='_blank'><b>PSE</b></a>, or percent standard error, is automatically included in all outputs. The higher an estimate's Percent Standard Error, or PSE, the larger the margin of error around the estimate, which means there is more uncertainty in the estimate.
+
+Estimates with a percent standard error exceeding 50 are not statistically different from zero using a standard 95% confidence interval.  Note this significance comparison is not suggesting these estimates all equal zero, but is rather intended to illustrate their high uncertainty.
+
+"Estimate Status","Year","Wave","Fishing Year","State","PSE","Does Angler Trips Meet MRIP Standard","Is Angler Trips Significantly Different From 0","Angler Trips","Angler Trips Lower 95% Confidence Limit","Angler Trips Upper 95% Confidence Limit"
+"FINAL",2015,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",20.3,"YES","YES",968018,582863,1353173
+"FINAL",2015,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",8.5,"YES","YES",9055815,7547116,10564513
+"FINAL",2015,"JANUARY/FEBRUARY","WAVE 1","HAWAII",18,"YES","YES",206082,133376,278788
+"FINAL",2015,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",13.9,"YES","YES",618532,450019,787045
+"FINAL",2015,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",14.3,"YES","YES",1705824,1227716,2183932
+"FINAL",2015,"JANUARY/FEBRUARY","WAVE 1","PUERTO RICO",25.8,"YES","YES",201315,99514,303116
+"FINAL",2016,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",17.6,"YES","YES",1273819,834402,1713236
+"FINAL",2016,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",9.5,"YES","YES",10626749,8648048,12605450
+"FINAL",2016,"JANUARY/FEBRUARY","WAVE 1","HAWAII",15.1,"YES","YES",177751,125144,230358
+"FINAL",2016,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",16.6,"YES","YES",754639,509110,1000168
+"FINAL",2016,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",13,"YES","YES",1752679,1306096,2199262
+"FINAL",2016,"JANUARY/FEBRUARY","WAVE 1","PUERTO RICO",27.3,"YES","YES",54861,25506,84216
+"FINAL",2017,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",25,"YES","YES",1470996,750208,2191784
+"FINAL",2017,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",11.1,"YES","YES",11895014,9307135,14482893
+"FINAL",2017,"JANUARY/FEBRUARY","WAVE 1","HAWAII",16.6,"YES","YES",244877,165204,324551
+"FINAL",2017,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",22,"YES","YES",727796,413970,1041621
+"FINAL",2017,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",15.9,"YES","YES",2714295,1868412,3560178
+"FINAL",2018,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",38.3,"CAUTION","YES",976721,243516,1709927
+"FINAL",2018,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",9.4,"YES","YES",15593616,12720648,18466583
+"FINAL",2018,"JANUARY/FEBRUARY","WAVE 1","HAWAII",13.6,"YES","YES",443034,324939,561130
+"FINAL",2018,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",24.5,"YES","YES",577645,300260,855030
+"FINAL",2018,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",14.7,"YES","YES",1198416,853128,1543703
+"FINAL",2019,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",18.3,"YES","YES",617046,395724,838368
+"FINAL",2019,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",11.6,"YES","YES",10902495,8423704,13381286
+"FINAL",2019,"JANUARY/FEBRUARY","WAVE 1","HAWAII",12.7,"YES","YES",519746,390371,649121
+"FINAL",2019,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",14.8,"YES","YES",347159,246455,447863
+"FINAL",2019,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",16.1,"YES","YES",1367270,935815,1798726
+"FINAL",2020,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",23.3,"YES","YES",831111,451559,1210663
+"FINAL",2020,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",10.1,"YES","YES",12948899,10385535,15512263
+"FINAL",2020,"JANUARY/FEBRUARY","WAVE 1","HAWAII",11.3,"YES","YES",710230,552929,867532
+"FINAL",2020,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",26.8,"YES","YES",833582,395718,1271445
+"FINAL",2020,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",14.3,"YES","YES",1201121,864471,1537772
+"FINAL",2021,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",19.4,"YES","YES",399522,247608,551437
+"FINAL",2021,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",11.4,"YES","YES",11774329,9143473,14405185
+"FINAL",2021,"JANUARY/FEBRUARY","WAVE 1","HAWAII",8.2,"YES","YES",483654,405921,561386
+"FINAL",2021,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",14.8,"YES","YES",648687,460516,836858
+"FINAL",2021,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",15.7,"YES","YES",1184993,820347,1549640
+"FINAL",2022,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",17.6,"YES","YES",545398,357258,733539
+"FINAL",2022,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",11.3,"YES","YES",13181620,10262155,16101085
+"FINAL",2022,"JANUARY/FEBRUARY","WAVE 1","HAWAII",7.6,"YES","YES",803311,683650,922972
+"FINAL",2022,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",15.2,"YES","YES",576815,404970,748659
+"FINAL",2022,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",14,"YES","YES",1376207,998576,1753839
+"FINAL",2023,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",22.8,"YES","YES",1116339,617469,1615209
+"FINAL",2023,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",11.1,"YES","YES",12312962,9634154,14991771
+"FINAL",2023,"JANUARY/FEBRUARY","WAVE 1","HAWAII",16.3,"YES","YES",571701,389054,754349
+"FINAL",2023,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",19.4,"YES","YES",369924,229264,510585
+"FINAL",2023,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",15.8,"YES","YES",1625564,1122160,2128969
+"FINAL",2024,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",26.8,"YES","YES",684652,325018,1044286
+"FINAL",2024,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",10.8,"YES","YES",11622546,9162285,14082806
+"FINAL",2024,"JANUARY/FEBRUARY","WAVE 1","HAWAII",16.5,"YES","YES",633020,428301,837739
+"FINAL",2024,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",16.6,"YES","YES",563794,380358,747230
+"FINAL",2024,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",13.4,"YES","YES",1128145,831849,1424441
+"PRELIMINARY",2025,"JANUARY/FEBRUARY","WAVE 1","ALABAMA",17,"YES","YES",629992,420079,839906
+"PRELIMINARY",2025,"JANUARY/FEBRUARY","WAVE 1","FLORIDA",9.7,"YES","YES",11335173,9180130,13490216
+"PRELIMINARY",2025,"JANUARY/FEBRUARY","WAVE 1","HAWAII",12.9,"YES","YES",734616,548876,920357
+"PRELIMINARY",2025,"JANUARY/FEBRUARY","WAVE 1","MISSISSIPPI",15.6,"YES","YES",432996,300603,565388
+"PRELIMINARY",2025,"JANUARY/FEBRUARY","WAVE 1","NORTH CAROLINA",17.4,"YES","YES",1157120,762496,1551745
+

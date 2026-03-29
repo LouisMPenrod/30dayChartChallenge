@@ -1,0 +1,1 @@
+Shiomi, Kozue; Tatani, Masanori; Kikuchi, Dale M. (2024). Data from: BirdWingData: wingspan and wing area data of birds compiled from multiple literature sources and original measurements. figshare. Dataset. https://doi.org/10.6084/m9.figshare.23537892.v2
