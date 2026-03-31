@@ -56,8 +56,7 @@ ui <- page_navbar(
 nav_panel(
   "Home",
   p(home_text),
-  p(home_text2),
-  p(home_text2.2),
+  p(home_text2, tags$br(),home_text2.2),
   p(
     home_text3,
     tags$a("louismpenrod@gmail.com", href = "mailto:louismpenrod@gmail.com"),
