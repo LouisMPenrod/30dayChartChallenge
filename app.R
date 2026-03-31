@@ -35,7 +35,8 @@ day_header <- function(day_num, topic, text = NULL) {
 }
 
 home_text <- "Welcome to my submissions for the 2026 #30DayChartChallenge!"
-home_text2 <- "Most visualization are created using publicly available datasets. While I've done my best to source reliable data,<br>figures are presented as-is and I make no guarantees regarding their accuracy or completeness."
+home_text2 <- "Most visualization are created using publicly available datasets. While I've done my best to source reliable data,"
+home_text2.2 <- " figures are presented as-is and I make no guarantees regarding their accuracy or completeness."
 home_text3 <- "Questions or feedback? Reach out or visit my website."
 
 # =============================================================================
@@ -56,6 +57,7 @@ nav_panel(
   "Home",
   p(home_text),
   p(home_text2),
+  p(home_text2.2),
   p(
     home_text3,
     tags$a("louismpenrod@gmail.com", href = "mailto:louismpenrod@gmail.com"),
