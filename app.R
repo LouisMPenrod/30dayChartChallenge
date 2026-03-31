@@ -34,6 +34,10 @@ day_header <- function(day_num, topic, text = NULL) {
   )
 }
 
+home_text <- "Welcome to my submissions for the 2026 #30DayChartChallenge!"
+home_text2 <- "Most visualization are created using publicly available datasets. While I've done my best to source reliable data, figures are presented as-is and I make no guarantees regarding their accuracy or completeness."
+home_text3 <- "Questions or feedback? Reach out or visit my website."
+
 # =============================================================================
 # UI
 # =============================================================================
@@ -46,6 +50,20 @@ ui <- page_navbar(
   header   = tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
   ),
+
+# Home
+nav_panel(
+  "Home",
+  p(home_text),
+  p(home_text2),
+  p(
+    home_text3,
+    tags$a("louismpenrod@gmail.com", href = "mailto:louismpenrod@gmail.com"),
+    " · ",
+    tags$a("louismpenrod.github.io", href = "https://louismpenrod.github.io/", target = "_blank")
+  ),
+  imageOutput("home")
+),
 
   # ===========================================================================
   # COMPARISONS
@@ -296,6 +314,9 @@ ui <- page_navbar(
 # =============================================================================
 
 server <- function(input, output, session) {
+
+ output$home <- renderImage({list(src = "www/challenges.jfif", width = "100%", height = "auto")}, deleteFile=FALSE)
+
 
   # COMPARISONS
   # output$day01_plot <- renderImage({list(src = "www/assets/XXXXX.png", width = "100%", height = "auto")}, deleteFile=FALSE)
