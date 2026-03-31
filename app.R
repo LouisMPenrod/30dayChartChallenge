@@ -315,7 +315,7 @@ nav_panel(
 
 server <- function(input, output, session) {
 
- output$home <- renderImage({list(src = "www/challenges.jfif", width = "25%", height = "auto")}, deleteFile=FALSE)
+ output$home <- renderImage({list(src = "www/challenges.jfif", width = "35%", height = "auto")}, deleteFile=FALSE)
 
 
   # COMPARISONS
