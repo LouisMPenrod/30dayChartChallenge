@@ -79,6 +79,14 @@ nav_panel(
       nav_panel(
         "1. Part-to-Whole",
         day_header(1, "Part-to-Whole"),
+        p("Data is the US commercial fisheries landing for 2022 as published by:", 
+        tags$br(),
+        "National Marine Fisheries Service (2024). Fisheries of the United States, 2022.",
+        tags$br(),
+        "Department of Commerce, NOAA Current Fishery Statistics No. 2022."),
+        p("I’m not a big fan of pie charts, but they fit the brief of “Part-to-Whole”.",
+          tags$br(),
+        "I've tried to elevate it by adding an illustration of a cast net, but I'm not sure if it adds to or distracts from the plot."),
         tags$div(
           style = "max-width: 900px;",
           imageOutput("day01_plot", height = "auto"))
