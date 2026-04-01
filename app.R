@@ -79,7 +79,6 @@ nav_panel(
       nav_panel(
         "1. Part-to-Whole",
         day_header(1, "Part-to-Whole"),
-        # imageOutput("day01_plot")
         tags$div(
           style = "max-width: 900px;",
           imageOutput("day01_plot", height = "auto"))
@@ -320,7 +319,7 @@ server <- function(input, output, session) {
 
 
   # COMPARISONS
-  # output$day01_plot <- renderImage({list(src = "www/assets/XXXXX.png", width = "100%", height = "auto")}, deleteFile=FALSE)
+  output$day01_plot <- renderImage({list(src = "www/outputs/day01_part_to_whole_landings.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   # output$day02_plot <- renderImage()
   # output$day03_plot <- renderImage()
   # output$day04_plot <- renderImage()
