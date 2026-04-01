@@ -143,7 +143,7 @@ p <- ggplot(df) +
   theme(legend.position  = "none",
     plot.title = element_text(hjust = 0.5, size = 17, face = "bold", margin = margin(b = 0)),
     plot.caption = element_text(size = 10, color = "grey30",
-                                margin = margin(r=2)),
+                                margin = margin(r=2, b = 0)),
     plot.caption.position = "plot")
 p
 
