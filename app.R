@@ -95,7 +95,9 @@ nav_panel(
       nav_panel(
         "2. Pictogram",
         day_header(2, "Pictogram"),
-        # imageOutput("day02_plot")
+        p("Data is from the NOAA Restoration Atlas which are projects conducted by NOAAs Restoration Center."),
+        p("Oysters are probably not the best subject for a pictogram since they are a bit blobby..."),
+        imageOutput("day02_plot")
       ),
 
       nav_panel(
@@ -323,12 +325,12 @@ nav_panel(
 
 server <- function(input, output, session) {
 
- output$home <- renderImage({list(src = "www/challenges.jfif", width = "35%", height = "auto")}, deleteFile=FALSE)
+ output$home <- renderImage({list(src = "www/challenges.jfif", width = "50%", height = "auto")}, deleteFile=FALSE)
 
 
   # COMPARISONS
   output$day01_plot <- renderImage({list(src = "www/outputs/day01_part_to_whole_landings.png", width = "100%", height = "auto")}, deleteFile=FALSE)
-  # output$day02_plot <- renderImage()
+  output$day02_plot <- renderImage({list(src = "www/outputs/day02_pictogram_oysters.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   # output$day03_plot <- renderImage()
   # output$day04_plot <- renderImage()
   # output$day05_plot <- renderImage()
