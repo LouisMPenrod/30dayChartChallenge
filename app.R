@@ -103,7 +103,9 @@ nav_panel(
       nav_panel(
         "3. Mosaic",
         day_header(3, "Mosaic"),
-        # imageOutput("day03_plot")
+        p("Data is from the USDA National Agricultural Statistics Service (NASS) Census of Agriculture, 2023"),
+        p("This shows the sum of sales by aquaculture type by US census region."),
+        imageOutput("day03_plot")
       ),
 
       nav_panel(
@@ -331,7 +333,7 @@ server <- function(input, output, session) {
   # COMPARISONS
   output$day01_plot <- renderImage({list(src = "www/outputs/day01_part_to_whole_landings.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   output$day02_plot <- renderImage({list(src = "www/outputs/day02_pictogram_oysters.png", width = "100%", height = "auto")}, deleteFile=FALSE)
-  # output$day03_plot <- renderImage()
+  output$day03_plot <- renderImage({list(src = "www/outputs/day03_mosaic_aq_prod.png", width = "70%", height = "auto")}, deleteFile=FALSE)
   # output$day04_plot <- renderImage()
   # output$day05_plot <- renderImage()
   # output$day06_plot <- renderImage()
