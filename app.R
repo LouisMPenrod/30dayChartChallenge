@@ -111,7 +111,12 @@ nav_panel(
       nav_panel(
         "4. Slope",
         day_header(4, "Slope"),
-        # plotlyOutput("day04_plot")
+        p("A line plot of the contestant tap-outs through time by season."),
+        p("It's hard to make any comparisons across seasons due to different locations and casts,", 
+        tags$br(),
+          "but we can see some season are very different from the others"),
+        p("Data is from the {alone} R package."),
+        imageOutput("day04_plot")
       ),
 
       nav_panel(
@@ -334,7 +339,7 @@ server <- function(input, output, session) {
   output$day01_plot <- renderImage({list(src = "www/outputs/day01_part_to_whole_landings.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   output$day02_plot <- renderImage({list(src = "www/outputs/day02_pictogram_oysters.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   output$day03_plot <- renderImage({list(src = "www/outputs/day03_mosaic_aq_prod.png", width = "70%", height = "auto")}, deleteFile=FALSE)
-  # output$day04_plot <- renderImage()
+  output$day04_plot <- renderImage({list(src = "www/outputs/day04_slope_alone.png", width = "70%", height = "auto")}, deleteFile=FALSE)
   # output$day05_plot <- renderImage()
   # output$day06_plot <- renderImage()
 
