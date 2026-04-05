@@ -122,7 +122,13 @@ nav_panel(
       nav_panel(
         "5. Experimental",
         day_header(5, "Experimental"),
-        # imageOutput("day05_plot")
+        p("Diet overlap of some predatory fishes in Florida."),
+        p("I've wanted to make something like this for a while. Admittedly, the data is not the best, but what I could pull together for the challenge. The concept is what I want to present."),
+        p("These are eulerr diagrams set up in a matrix arrangement. The size of the circle shows the size of the diet",
+        tags$br(),
+        "(scaled to the max diet size so the circle size is the same across plot for the same species). The overlap shows the proportion of prey shared."),
+        p("Data is from a combination of {rfishbase} R pacakge and publications (citations in dataset on github)."),
+        imageOutput("day05_plot")
       ),
 
       nav_panel(
@@ -340,7 +346,7 @@ server <- function(input, output, session) {
   output$day02_plot <- renderImage({list(src = "www/outputs/day02_pictogram_oysters.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   output$day03_plot <- renderImage({list(src = "www/outputs/day03_mosaic_aq_prod.png", width = "70%", height = "auto")}, deleteFile=FALSE)
   output$day04_plot <- renderImage({list(src = "www/outputs/day04_slope_alone.png", width = "70%", height = "auto")}, deleteFile=FALSE)
-  # output$day05_plot <- renderImage()
+  output$day05_plot <- renderImage({list(src = "www/outputs/day05_diet_euler_matrix.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   # output$day06_plot <- renderImage()
 
   # DISTRIBUTIONS
