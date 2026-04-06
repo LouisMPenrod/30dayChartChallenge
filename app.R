@@ -132,9 +132,12 @@ nav_panel(
       ),
 
       nav_panel(
-        "6. Data Day: RSF",
+        "6. Data Day: Reporters Without Borders",
         day_header(6, "Data Day: RSF"),
-        # plotlyOutput("day06_plot")
+        p("Are countries that protect their press also more likely to protect their environment?"),
+        p("To find out, I plotted the RSF Press Freedom Index against the Yale Environmental Performance Index."),
+        p("Data: RSF & Yale EPI."),
+        imageOutput("day06_plot")
       )
     )
   ),
@@ -347,7 +350,7 @@ server <- function(input, output, session) {
   output$day03_plot <- renderImage({list(src = "www/outputs/day03_mosaic_aq_prod.png", width = "70%", height = "auto")}, deleteFile=FALSE)
   output$day04_plot <- renderImage({list(src = "www/outputs/day04_slope_alone.png", width = "70%", height = "auto")}, deleteFile=FALSE)
   output$day05_plot <- renderImage({list(src = "www/outputs/day05_diet_euler_matrix.png", width = "100%", height = "auto")}, deleteFile=FALSE)
-  # output$day06_plot <- renderImage()
+  output$day06_plot <- renderImage({list(src = "www/outputs/day06_data_rsf_v_epi.png", width = "100%", height = "auto")}, deleteFile=FALSE)
 
   # DISTRIBUTIONS
   # output$day07_plot <- renderImage()
