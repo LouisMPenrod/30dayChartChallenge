@@ -155,7 +155,7 @@ nav_panel(
       nav_panel(
         "7. Multiscale",
         day_header(7, "Multiscale"),
-        # uiOutput("day07_plot")
+        htmlOutput("day07_plot")
       ),
 
       nav_panel(
@@ -353,7 +353,23 @@ server <- function(input, output, session) {
   output$day06_plot <- renderImage({list(src = "www/outputs/day06_data_rsf_v_epi.png", width = "100%", height = "auto")}, deleteFile=FALSE)
 
   # DISTRIBUTIONS
-  # output$day07_plot <- renderImage()
+  output$day07_plot <- renderUI({
+  tagList(
+    tags$iframe(
+      id     = "day07_frame",
+      src    = "outputs/day07_multiscale.html",
+      width  = "90%",
+      height = "850px",
+      style  = "border: none; background-color: #EEEEEE;"
+    ),
+    tags$script(HTML("
+      document.getElementById('day07_frame').onload = function() {
+        this.contentDocument.body.style.backgroundColor = '#EEEEEE';
+      };
+    "))
+  )
+})
+  
   # output$day08_plot <- renderImage()
   # output$day09_plot <- renderImage()
   # output$day10_plot <- renderImage()
