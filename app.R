@@ -161,7 +161,7 @@ nav_panel(
       nav_panel(
         "8. Circular",
         day_header(8, "Circular"),
-        # imageOutput("day08_plot")
+        imageOutput("day08_plot")
       ),
 
       nav_panel(
@@ -370,7 +370,7 @@ server <- function(input, output, session) {
   )
 })
   
-  # output$day08_plot <- renderImage()
+  output$day08_plot <- renderImage({list(src = "www/outputs/day08_circular_padi.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   # output$day09_plot <- renderImage()
   # output$day10_plot <- renderImage()
   # output$day11_plot <- renderImage()
