@@ -167,7 +167,7 @@ nav_panel(
       nav_panel(
         "9. Wealth",
         day_header(9, "Wealth"),
-        # plotlyOutput("day09_plot")
+        imageOutput("day09_plot")
       ),
 
       nav_panel(
@@ -371,7 +371,7 @@ server <- function(input, output, session) {
 })
   
   output$day08_plot <- renderImage({list(src = "www/outputs/day08_circular_padi.png", width = "80%", height = "auto")}, deleteFile=FALSE)
-  # output$day09_plot <- renderImage()
+  output$day09_plot <- renderImage({list(src = "www/outputs/day09_wealth_nike.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   # output$day10_plot <- renderImage()
   # output$day11_plot <- renderImage()
   # output$day12_plot <- renderImage()
