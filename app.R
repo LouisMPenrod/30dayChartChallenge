@@ -181,7 +181,11 @@ nav_panel(
       nav_panel(
         "11. Physical",
         day_header(11, "Physical"),
-        # plotlyOutput("day11_plot")
+        p("Turned to physical sciences for today's challenge."),
+        p("A line plot of stage height in surface and ground water in the St. Johns WMD during hurricane Irma."),
+        p("Line intensity encodes the station's proximity to the storm's path."),
+        p("It takes weeks for levels to get back to normal."),
+        imageOutput("day11_plot")
       ),
 
       nav_panel(
@@ -375,7 +379,7 @@ server <- function(input, output, session) {
   output$day08_plot <- renderImage({list(src = "www/outputs/day08_circular_padi.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   output$day09_plot <- renderImage({list(src = "www/outputs/day09_wealth_nike.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   output$day10_plot <- renderImage({list(src = "www/outputs/day10_pop_culture_pokemonvbird.png", width = "100%", height = "auto")}, deleteFile=FALSE)
-  # output$day11_plot <- renderImage()
+  output$day11_plot <- renderImage({list(src = "www/outputs/day11_physical_irma.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   # output$day12_plot <- renderImage()
 
   # RELATIONSHIPS
