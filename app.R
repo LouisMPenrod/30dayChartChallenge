@@ -191,7 +191,7 @@ nav_panel(
       nav_panel(
         "12. Theme: FlowingData",
         day_header(12, "Theme: FlowingData"),
-        # imageOutput("day12_plot")
+        imageOutput("day12_plot")
       )
     )
   ),
@@ -380,7 +380,7 @@ server <- function(input, output, session) {
   output$day09_plot <- renderImage({list(src = "www/outputs/day09_wealth_nike.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   output$day10_plot <- renderImage({list(src = "www/outputs/day10_pop_culture_pokemonvbird.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   output$day11_plot <- renderImage({list(src = "www/outputs/day11_physical_irma.png", width = "100%", height = "auto")}, deleteFile=FALSE)
-  # output$day12_plot <- renderImage()
+  output$day12_plot <- renderImage({list(src = "www/outputs/day12_flowing_fmsy.png", width = "80%", height = "auto")}, deleteFile=FALSE)
 
   # RELATIONSHIPS
   # output$day13_plot <- renderImage()
