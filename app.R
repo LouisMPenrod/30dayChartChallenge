@@ -209,7 +209,7 @@ nav_panel(
       nav_panel(
         "13. Ecosystems",
         day_header(13, "Ecosystems"),
-        # leafletOutput("day13_plot")
+        imageOutput("day13_plot")
       ),
 
       nav_panel(
@@ -383,7 +383,7 @@ server <- function(input, output, session) {
   output$day12_plot <- renderImage({list(src = "www/outputs/day12_flowing_fmsy.png", width = "80%", height = "auto")}, deleteFile=FALSE)
 
   # RELATIONSHIPS
-  # output$day13_plot <- renderImage()
+  output$day13_plot <- renderImage({list(src = "www/outputs/day13_ecosystems_startdew_mines.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   # output$day14_plot <- renderImage()
   # output$day15_plot <- renderImage()
   # output$day16_plot <- renderImage()
