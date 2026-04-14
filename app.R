@@ -215,7 +215,7 @@ nav_panel(
       nav_panel(
         "14. Trade",
         day_header(14, "Trade"),
-        # imageOutput("day14_plot")
+        imageOutput("day14_plot")
       ),
 
       nav_panel(
@@ -384,7 +384,7 @@ server <- function(input, output, session) {
 
   # RELATIONSHIPS
   output$day13_plot <- renderImage({list(src = "www/outputs/day13_ecosystems_startdew_mines.png", width = "80%", height = "auto")}, deleteFile=FALSE)
-  # output$day14_plot <- renderImage()
+  output$day14_plot <- renderImage({list(src = "www/outputs/day14_trade_cites.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   # output$day15_plot <- renderImage()
   # output$day16_plot <- renderImage()
   # output$day17_plot <- renderImage()
