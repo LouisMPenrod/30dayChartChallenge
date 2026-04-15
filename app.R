@@ -385,7 +385,7 @@ server <- function(input, output, session) {
   # RELATIONSHIPS
   output$day13_plot <- renderImage({list(src = "www/outputs/day13_ecosystems_startdew_mines.png", width = "80%", height = "auto")}, deleteFile=FALSE)
   output$day14_plot <- renderImage({list(src = "www/outputs/day14_trade_cites.png", width = "80%", height = "auto")}, deleteFile=FALSE)
-  output$day15_plot <- renderImage({list(src = "www/outputs/day15_correlation.png", width = "100%", height = "auto")}, deleteFile=FALSE)
+  output$day15_plot <- renderImage({list(src = "www/outputs/day15_correlation_lowres.png", width = "100%", height = "auto")}, deleteFile=FALSE)
   # output$day16_plot <- renderImage()
   # output$day17_plot <- renderImage()
   # output$day18_plot <- renderImage()

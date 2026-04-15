@@ -157,3 +157,6 @@ ggplot(csLongBM_fam, aes(x = factor(family, levels = family_ord), y = newid, fil
 
 ggsave(filename="../www/outputs/day15_correlation.png", plot=last_plot(),
        dpi=600,height = 12,width=14,units="in")
+
+ggsave(filename="../www/outputs/day15_correlation_lowres.png", plot=last_plot(),
+       dpi=300,height = 12,width=14,units="in")
