@@ -1,0 +1,445 @@
+---
+title: ""
+format: 
+  html:
+    echo: false
+    self-contained: true
+---
+
+```{r}
+#| message: false
+#| output: false
+  
+library(tidyverse)
+library(jsonlite)
+library(r2d3)
+
+set.seed(42)
+ 
+study_params <- tibble(
+  STUDYID    = c("STUDY001", "STUDY002", "STUDY003"),
+  n_subjects = c(80, 58, 102),    # subjects per study
+  lloq       = c(0.5, 0.5, 0.5),  # shared LLOQ across studies
+  cl_pop     = c(1.2, 1.4, 1.5),  # population CL - controls BLQ rate
+  vd_pop     = c(50, 50, 50),     # population Vd
+  # Subject-level non-compliance rate (drives EXCFL)
+  excl_rate  = c(0.032, 0.037, 0.033),
+  # Sample-level deletion rate among retained subjects (drives DELFLAG)
+  del_rate   = c(0.058, 0.093, 0.072),
+  # Stochastic BLQ supplement removed 
+  blq_rate   = c(0.0, 0.0, 0.0)
+)
+ 
+# Nominal timepoints (hrs post-dose)
+ntfd_schedule <- c(0, 0.5, 1, 2, 4, 6, 8, 12, 16, 24, 36, 48, 72, 96, 120)
+ 
+ 
+# One-compartment PK: C(t) = (Dose/Vd) * exp(-CL/Vd * t)
+# Parameters drawn with between-subject variability (lognormal)
+sim_pk <- function(ntfd, dose = 100, cl_pop = 5, vd_pop = 50, bsv_cv = 0.3) {
+  cl <- cl_pop * exp(rnorm(1, mean = 0, sd = bsv_cv))
+  vd <- vd_pop * exp(rnorm(1, mean = 0, sd = bsv_cv))
+  ke <- cl / vd
+  conc <- (dose / vd) * exp(-ke * ntfd)
+  # Add residual lognormal error (20% CV)
+  conc * exp(rnorm(length(ntfd), mean = 0, sd = 0.2))
+}
+ 
+ 
+sim_study <- function(STUDYID, n_subjects, lloq, cl_pop, vd_pop, excl_rate, del_rate, blq_rate) {
+ 
+  # Subject IDs
+  subjects <- tibble(
+    STUDYID = STUDYID,
+    USUBJID  = sprintf("%s-%03d", STUDYID, seq_len(n_subjects))
+  ) %>%
+    mutate(
+      # Subject-level exclusion flag applied to ALL records for flagged subjects
+      EXCFL   = if_else(runif(n()) < excl_rate, "Y", "N")
+    )
+ 
+  # Expand to one row per subject × timepoint
+  pk_data <- subjects %>%
+    cross_join(tibble(NTFD = ntfd_schedule)) %>%
+    arrange(USUBJID, NTFD)
+ 
+  # Simulate DV for each subject
+  pk_data <- pk_data %>%
+    group_by(USUBJID) %>%
+    mutate(DV = sim_pk(NTFD, cl_pop = cl_pop, vd_pop = vd_pop)) %>%
+    ungroup()
+ 
+  # Sample-level deletion flag - only among non-excluded subjects
+  pk_data <- pk_data %>%
+    mutate(
+      DELFLAG = if_else(EXCFL == "N" & runif(n()) < del_rate, "Y", "N")
+    )
+ 
+  # BLQ flag, applied after exclusion and deletion filters conceptually,
+  # but stored on all rows; only meaningful on retained samples.
+  # Two sources of BLQ:
+  #   1. DV naturally falls below LLOQ (trough timepoints)
+  #   2. Additional stochastic BLQ to hit target rate
+  pk_data <- pk_data %>%
+    mutate(
+      BLQ = if_else(DV < lloq, "Y", "N"),
+      DV  = if_else(BLQ == "Y", lloq / 2, DV)
+    )
+ 
+  pk_data
+}
+ 
+ 
+adpc <- pmap_dfr(study_params, sim_study)
+ 
+# Final column selection and ordering
+adpc <- adpc %>%
+  select(STUDYID, USUBJID, NTFD, DV, EXCFL, DELFLAG, BLQ)
+ 
+glimpse(adpc)
+
+# checks
+## check EXCFL is same within an ID
+adpc |> 
+  group_by(USUBJID) |> 
+  summarise(nd = n_distinct(EXCFL)) |> 
+  ungroup() |> 
+  count(nd)
+ 
+
+ 
+# build_attrition_paths
+ build_attrition_paths <- function(data) {
+  data %>%
+    mutate(
+      r1 = STUDYID,
+      r2 = case_when(
+        EXCFL == "Y" ~ "Excluded-Subject",
+        TRUE         ~ "Compliant"
+      ),
+      r3 = case_when(
+        EXCFL == "Y"   ~ "-",
+        DELFLAG == "Y" ~ "Sample-Deleted",
+        TRUE           ~ "Passed-QC"
+      ),
+      r4 = case_when(
+        EXCFL == "Y"   ~ "-",
+        DELFLAG == "Y" ~ "-",
+        BLQ == "Y"     ~ "BLQ",
+        TRUE           ~ "Quantifiable"
+      ),
+      r5 = case_when(
+        EXCFL == "Y"   ~ "-",
+        DELFLAG == "Y" ~ "-",
+        BLQ == "Y"     ~ "-",
+        TRUE           ~ "Final Records"
+      ),
+      path = paste(r1, r2, r3, r4, r5, sep = "/")
+    ) %>%
+    count(path, name = "size") %>%
+    arrange(path)
+}
+ 
+# Run pipeline
+sunburst_paths <- build_attrition_paths(adpc)
+ 
+print(sunburst_paths)
+
+ 
+summarise_attrition <- function(data) {
+ 
+  studies <- data %>% distinct(STUDYID) %>% pull()
+ 
+  summarise_study <- function(sid) {
+ 
+    d <- data %>% filter(STUDYID == sid)
+ 
+    n_raw <- nrow(d)
+ 
+    # Stage 1: remove excluded subjects
+    d_comp <- d %>% filter(EXCFL == "N")
+    n_comp <- nrow(d_comp)
+ 
+    # Stage 2: remove deleted samples
+    d_qc <- d_comp %>% filter(DELFLAG == "N")
+    n_qc <- nrow(d_qc)
+ 
+    # Stage 3: remove BLQ
+    d_final <- d_qc %>% filter(BLQ == "N")
+    n_final <- nrow(d_final)
+ 
+    tibble(
+      Study                        = sid,
+      `Raw samples`                = n_raw,
+      `After subject exclusions`   = n_comp,
+      `% remaining`                = round(n_comp / n_raw * 100, 1),
+      `After sample QC flags`      = n_qc,
+      `% remaining `               = round(n_qc  / n_raw * 100, 1),
+      `After BLQ removal`          = n_final,
+      `% remaining  `              = round(n_final / n_raw * 100, 1)
+    )
+  }
+ 
+  map_dfr(studies, summarise_study)
+}
+ 
+attrition_summary <- summarise_attrition(adpc)
+ 
+# Wide print for easy review
+attrition_summary %>%
+  print(width = Inf)
+ 
+# Also print percent-only view for quick comparison to targets
+attrition_summary %>%
+  select(
+    Study,
+    `Raw`                = `Raw samples`,
+    `After excl (%)`     = `% remaining`,
+    `After QC (%)`       = `% remaining `,
+    `After BLQ (%)`      = `% remaining  `
+  ) %>%
+  print()
+```
+
+```{r}
+js_file <- tempfile(fileext = ".js")
+writeLines("
+  var sz = options.size;
+  var W = width;
+  var H = 900;
+  var cx = W / 2;
+  var cy = H / 2;
+  var radius = sz;
+  var innerR = radius * 0.2;
+  var ringW  = (radius - innerR) / 5;
+
+  svg.attr('width', W).attr('height', H);
+  svg.style('background-color', '#EEEEEE');
+  // Title
+  svg.append('text')
+    .attr('x', W / 2)
+    .attr('y', 30)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '18px')
+    .attr('font-weight', 'bold')
+    .attr('fill', '#333')
+    .text('PK Sample Attrition by Study');
+
+  // Footnote
+  svg.append('text')
+    .attr('x', W / 2)
+    .attr('y', H - 10)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '12px')
+    .attr('fill', '#888')
+    .text('Data: Simulated from typical observed values | Viz: Louis M Penrod | #30DayChartChallenge');
+
+  // Color scale keyed to top-level (depth-1) node names
+  var color = d3.scaleOrdinal()
+    .domain(['STUDY001', 'STUDY002', 'STUDY003'])
+    .range(['#4e79a7', '#f28e2b', '#59a14f']);
+
+  // Walk up to depth-1 ancestor to get the root color
+  function getColor(d) {
+    var ancestor = d;
+    while (ancestor.depth > 1) ancestor = ancestor.parent;
+    return color(ancestor.data.name);
+  }
+
+  function buildHierarchy(data) {
+  var root = {name: 'root', children: []};
+  data.forEach(function(row) {
+    var parts = row.path.split('/').filter(p => p !== '-');
+    var node = root;
+    parts.forEach(function(part, i) {
+      var child = node.children.find(c => c.name === part);
+      if (!child) {
+        child = {name: part, children: []};
+        node.children.push(child);
+      }
+      if (i === parts.length - 1) child.value = (child.value || 0) + row.size;
+      node = child;
+    });
+  });
+  return root;
+}
+
+  var hierarchy = d3.hierarchy(buildHierarchy(data))
+    .sum(d => d.value || 0);
+
+var tree = buildHierarchy(data);
+
+var hierarchy = d3.hierarchy(tree).sum(d => d.value || 0);
+
+
+  d3.partition().size([2 * Math.PI, 1])(hierarchy);
+
+
+
+  var arc = d3.arc()
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .innerRadius(d => innerR + d.depth * ringW)
+    .outerRadius(d => innerR + (d.depth + 1) * ringW - 2)
+    .padAngle(0.006);
+
+  var g = svg.append('g')
+    .attr('transform', 'translate(' + cx + ',' + cy + ')');
+
+// Breadcrumb dimensions
+  var bcW = 110;
+  var bcH = 30;
+  var bcSpacing = 3;
+  var bcTip = 10;
+
+  // Create breadcrumb group above the chart
+  var bcGroup = svg.append('g')
+    .attr('transform', 'translate(10, 55)');
+
+  // Center label group
+  var centerLabel = g.append('text')
+    .attr('text-anchor', 'middle')
+    .style('visibility', 'hidden');
+
+  centerLabel.append('tspan')
+    .attr('class', 'pct')
+    .attr('x', 0)
+    .attr('y', '-0.3em')
+    .attr('font-size', '24px')
+    .attr('fill', '#333')
+    .attr('font-weight', 'bold');
+
+  centerLabel.append('tspan')
+    .attr('class', 'label')
+    .attr('x', 0)
+    .attr('y', '1em')
+    .attr('font-size', '11px')
+    .attr('fill', '#666');
+
+  centerLabel.append('tspan')
+    .attr('class', 'label')
+    .attr('x', 0)
+    .attr('y', '2.5em')
+    .attr('font-size', '11px')
+    .attr('fill', '#666');
+
+  function breadcrumbPoints(d, i) {
+    var points = [];
+    points.push('0,0');
+    points.push(bcW + ',0');
+    points.push(bcW + bcTip + ',' + (bcH / 2));
+    points.push(bcW + ',' + bcH);
+    points.push('0,' + bcH);
+    if (i > 0) points.push(bcTip + ',' + (bcH / 2));
+    return points.join(' ');
+  }
+
+  function updateBreadcrumbs(ancestors, pct) {
+    bcGroup.selectAll('g').remove();
+    bcGroup.selectAll('text').remove();
+
+    var bc = bcGroup.selectAll('g')
+      .data(ancestors)
+      .join('g')
+        .attr('transform', (d, i) => 'translate(' + i * (bcW + bcSpacing + bcTip) + ', 0)');
+
+    bc.append('polygon')
+      .attr('points', (d, i) => breadcrumbPoints(d, i))
+      .attr('fill', d => getColor(d))
+      .attr('opacity', 0.8);
+
+    bc.append('text')
+      .attr('x', (bcW + bcTip) / 2)
+      .attr('y', bcH / 2)
+      .attr('dy', '0.35em')
+      .attr('text-anchor', 'middle')
+      .attr('fill', 'white')
+      .attr('font-size', '11px')
+      .text(d => d.data.name);
+
+    // Percentage at the end of the chain
+    bcGroup.append('text')
+      .attr('x', ancestors.length * (bcW + bcSpacing + bcTip) + 10)
+      .attr('y', bcH / 2)
+      .attr('dy', '0.35em')
+      .attr('fill', '#333')
+      .attr('font-size', '12px')
+      .text(pct + '%');
+  }
+
+  // Visible paths
+  var path = g.append('g')
+    .selectAll('path')
+    .data(hierarchy.descendants().filter(d => d.depth > 0 && d.x1 - d.x0 > 0.001))
+    .join('path')
+      .attr('d', arc)
+      .attr('fill', d => getColor(d))
+      .attr('fill-opacity', d => 1 - (d.depth - 1) * 0.15)
+      .attr('stroke', 'white')
+      .attr('stroke-width', 0.5);
+
+  // Invisible mouse target paths (slightly wider hit area)
+  var mousearc = d3.arc()
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .innerRadius(d => innerR + d.depth * ringW)
+    .outerRadius(d => innerR + (d.depth + 1) * ringW + 5)
+    .padAngle(0.006);
+
+  g.append('g')
+    .attr('fill', 'none')
+    .attr('pointer-events', 'all')
+    .on('mouseleave', function() {
+      path.attr('fill-opacity', d => 1 - (d.depth - 1) * 0.15);
+      centerLabel.style('visibility', 'hidden');
+      bcGroup.style('visibility', 'hidden');
+    })
+    .selectAll('path')
+    .data(hierarchy.descendants().filter(d => d.depth > 0 && d.x1 - d.x0 > 0.001))
+    .join('path')
+      .attr('d', mousearc)
+      .on('mouseenter', function(event, d) {
+        var ancestors = d.ancestors().reverse().slice(1);
+        var rootNode = d;
+        while (rootNode.parent) rootNode = rootNode.parent;
+        var pct = ((100 * d.value) / rootNode.value).toPrecision(3);
+
+        path.attr('fill-opacity', node =>
+          ancestors.indexOf(node) >= 0 ? 1.0 : 0.3
+        );
+
+        // Study-level percentage — walk up to depth-1 ancestor
+        var studyNode = d;
+        while (studyNode.depth > 1) studyNode = studyNode.parent;
+        var pctStudy = ((100 * d.value) / studyNode.value).toPrecision(3);
+
+        centerLabel.style('visibility', null);
+        centerLabel.selectAll('tspan').nodes()[0].textContent = d.data.name;
+        centerLabel.selectAll('tspan').nodes()[1].textContent = pctStudy + '% of ' + studyNode.data.name;
+        centerLabel.selectAll('tspan').nodes()[2].textContent = pct + '% overall';
+
+        
+
+        updateBreadcrumbs(ancestors, pct);
+        bcGroup.style('visibility', 'visible');
+      });
+
+  bcGroup.style('visibility', 'hidden');
+", js_file)
+
+r2d3::r2d3(
+  data       = sunburst_paths,
+  script     = js_file,
+  height     = 1200,
+  options = list(size = 325),
+  d3_version = "6"
+)
+```
+
+
+```{css}
+.r2d3 iframe {
+  height: 900px !important;
+}
+```
+

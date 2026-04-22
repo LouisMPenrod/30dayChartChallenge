@@ -227,18 +227,21 @@ nav_panel(
       nav_panel(
         "16. Causation",
         day_header(16, "Causation"),
+        p("Will circle back to this day when time allows"),
         # imageOutput("day16_plot")
       ),
 
       nav_panel(
         "17. Remake",
         day_header(17, "Remake"),
+        p("Will circle back to this day when time allows"),
         # imageOutput("day17_plot")
       ),
 
       nav_panel(
         "18. Data Day: UNICEF",
         day_header(18, "Data Day: UNICEF"),
+        p("Will circle back to this day when time allows"),
         # plotlyOutput("day18_plot")
       )
     )
@@ -257,25 +260,28 @@ nav_panel(
       nav_panel(
         "19. Evolution",
         day_header(19, "Evolution"),
+        p("Will circle back to this day when time allows"),
         # imageOutput("day19_plot")
       ),
 
       nav_panel(
         "20. Global Change",
         day_header(20, "Global Change"),
+        p("Will circle back to this day when time allows"),
         # plotlyOutput("day20_plot")
       ),
 
       nav_panel(
         "21. Historical",
         day_header(21, "Historical"),
+        p("Will circle back to this day when time allows"),
         # leafletOutput("day21_plot")
       ),
 
       nav_panel(
         "22. New Tool",
         day_header(22, "New Tool"),
-        # r2d3Output("day22_plot")
+        htmlOutput("day22_plot")
       ),
 
       nav_panel(
@@ -394,7 +400,22 @@ server <- function(input, output, session) {
   # output$day19_plot <- renderImage()
   # output$day20_plot <- renderImage()
   # output$day21_plot <- renderImage()
-  # output$day22_plot <- renderImage()
+  output$day22_plot <- renderUI({
+  tagList(
+    tags$iframe(
+      id     = "day22_frame",
+      src    = "outputs/day22_newtool.html",
+      width  = "90%",
+      height = "1300px",
+      style  = "border: none; background-color: #EEEEEE;"
+    ),
+    tags$script(HTML("
+      document.getElementById('day22_frame').onload = function() {
+        this.contentDocument.body.style.backgroundColor = '#EEEEEE';
+      };
+    "))
+  )
+})
   # output$day23_plot <- renderImage()
   # output$day24_plot <- renderImage()
 
